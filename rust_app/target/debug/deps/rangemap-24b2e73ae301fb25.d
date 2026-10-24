@@ -1,0 +1,12 @@
+/Users/jeri/Documents/rust/Rust_final_project/rust_app/target/debug/deps/rangemap-24b2e73ae301fb25.d: /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/lib.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/inclusive_map.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/inclusive_set.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/map.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/operations.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/set.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/range_wrapper.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/std_ext.rs
+
+/Users/jeri/Documents/rust/Rust_final_project/rust_app/target/debug/deps/librangemap-24b2e73ae301fb25.rmeta: /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/lib.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/inclusive_map.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/inclusive_set.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/map.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/operations.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/set.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/range_wrapper.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/std_ext.rs
+
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/lib.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/inclusive_map.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/inclusive_set.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/map.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/operations.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/set.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/range_wrapper.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rangemap-1.8.0/src/std_ext.rs:

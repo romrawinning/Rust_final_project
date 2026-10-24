@@ -1,0 +1,9 @@
+/Users/jeri/Documents/rust/Rust_final_project/rust_app/target/debug/deps/objc2_app_kit-642580ab61e0cfc6.d: /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/lib.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/generated/mod.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/generated/NSPasteboard.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/../examples/delegate.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/../examples/nspasteboard.rs
+
+/Users/jeri/Documents/rust/Rust_final_project/rust_app/target/debug/deps/libobjc2_app_kit-642580ab61e0cfc6.rmeta: /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/lib.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/generated/mod.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/generated/NSPasteboard.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/../examples/delegate.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/../examples/nspasteboard.rs
+
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/lib.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/generated/mod.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/generated/NSPasteboard.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/../examples/delegate.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/objc2-app-kit-0.2.2/src/../examples/nspasteboard.rs:
