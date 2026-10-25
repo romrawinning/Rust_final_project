@@ -16,6 +16,13 @@ enum Message {
     OpenFile,
     Search,
 }
+
+fn read_lines (path: &str) -> Result<Vec<String>, String> {
+    fs::read_to_string(path)
+    .map(|s| s.lines().map(|l| l.to_string()).collect())
+    .map_err(|e| format! ("Cannot open '{}' : "{}", path, e))
+}
+
 fn main() {
     
 
