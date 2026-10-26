@@ -3,6 +3,8 @@ use std::io;
 use iced::widget::{button, column, row, text, text_input, scrollable};
 use iced::{Command, Element};
 
+mod system;
+
 
 struct Gui_Viewer {
     file_name: String,
