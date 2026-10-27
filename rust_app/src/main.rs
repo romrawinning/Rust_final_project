@@ -3,7 +3,6 @@ mod system;
 use iced::widget::{button, column, row, scrollable, text, text_input};
 use iced::{Alignment, Length, Element, Sandbox, Settings, Theme, Command};
 
-use crate::system::read_lines;
 pub struct Gui_Viewer {
     file_name: String,
     keyword: String,

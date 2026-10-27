@@ -1,0 +1,11 @@
+/Users/jeri/Documents/rust/Rust_final_project/rust_app/target/debug/deps/digest-4cf649e7bcd3ca45.d: /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/lib.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/ct_variable.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/rt_variable.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/wrapper.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/xof_reader.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/digest.rs
+
+/Users/jeri/Documents/rust/Rust_final_project/rust_app/target/debug/deps/libdigest-4cf649e7bcd3ca45.rmeta: /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/lib.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/ct_variable.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/rt_variable.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/wrapper.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/xof_reader.rs /Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/digest.rs
+
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/lib.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/ct_variable.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/rt_variable.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/wrapper.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/core_api/xof_reader.rs:
+/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/digest-0.10.7/src/digest.rs:

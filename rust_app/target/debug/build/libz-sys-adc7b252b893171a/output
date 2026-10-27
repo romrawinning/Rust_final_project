@@ -1,0 +1,97 @@
+cargo:rerun-if-env-changed=LIBZ_SYS_STATIC
+cargo:rerun-if-changed=build.rs
+cargo:rerun-if-changed=zng/cmake.rs
+cargo:rerun-if-changed=zng/cc.rs
+cargo:rerun-if-env-changed=ZLIB_NO_PKG_CONFIG
+cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-apple-darwin
+cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_apple_darwin
+cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+cargo:rerun-if-env-changed=PKG_CONFIG
+cargo:rerun-if-env-changed=ZLIB_STATIC
+cargo:rerun-if-env-changed=ZLIB_DYNAMIC
+cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-apple-darwin
+cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_apple_darwin
+cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-apple-darwin
+cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_apple_darwin
+cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-apple-darwin
+cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_apple_darwin
+cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+cargo:rerun-if-env-changed=ZLIB_STATIC
+cargo:rerun-if-env-changed=ZLIB_DYNAMIC
+cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-apple-darwin
+cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_apple_darwin
+cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-apple-darwin
+cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_apple_darwin
+cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-apple-darwin
+cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_apple_darwin
+cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+cargo:warning=Could not find zlib include paths via pkg-config: Could not run `PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 pkg-config --libs --cflags zlib`
+The pkg-config command could not be found.
+
+Most likely, you need to install a pkg-config package for your OS.
+Try `brew install pkgconf` if you have Homebrew.
+
+If you've already installed it, ensure the pkg-config command is one of the
+directories in the PATH environment variable.
+
+If you did not expect this build to link to a pre-installed system library,
+then check documentation of the libz-sys crate for an option to
+build the library from source, or disable features or dependencies
+that require pkg-config.
+cargo:rerun-if-env-changed=CC_x86_64-apple-darwin
+CC_x86_64-apple-darwin = None
+cargo:rerun-if-env-changed=CC_x86_64_apple_darwin
+CC_x86_64_apple_darwin = None
+cargo:rerun-if-env-changed=HOST_CC
+HOST_CC = None
+cargo:rerun-if-env-changed=CC
+CC = None
+cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
+cargo:rerun-if-env-changed=CPATH
+cargo:rerun-if-env-changed=C_INCLUDE_PATH
+cargo:rerun-if-env-changed=CPLUS_INCLUDE_PATH
+cargo:rerun-if-env-changed=OBJC_INCLUDE_PATH
+cargo:rerun-if-env-changed=OBJCPLUS_INCLUDE_PATH
+cargo:rerun-if-env-changed=COMPILER_PATH
+cargo:rerun-if-env-changed=SOURCE_DATE_EPOCH
+cargo:rerun-if-env-changed=CCC_OVERRIDE_OPTIONS
+cargo:rerun-if-env-changed=CLANG_NO_DEFAULT_CONFIG
+cargo:rerun-if-env-changed=DEVELOPER_DIR
+cargo:rerun-if-env-changed=TOOLCHAINS
+cargo:rerun-if-env-changed=SDKROOT
+cargo:rerun-if-env-changed=RC_DEBUG_OPTIONS
+cargo:rerun-if-env-changed=RC_DEBUG_PREFIX_MAP
+cargo:rerun-if-env-changed=MACOSX_DEPLOYMENT_TARGET
+cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
+CRATE_CC_NO_DEFAULTS = None
+CRATE_CC_NO_DEFAULTS = None
+MACOSX_DEPLOYMENT_TARGET = None
+cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
+cargo:rerun-if-env-changed=CFLAGS
+CFLAGS = None
+cargo:rerun-if-env-changed=HOST_CFLAGS
+HOST_CFLAGS = None
+cargo:rerun-if-env-changed=CFLAGS_x86_64_apple_darwin
+CFLAGS_x86_64_apple_darwin = None
+cargo:rerun-if-env-changed=CFLAGS_x86_64-apple-darwin
+CFLAGS_x86_64-apple-darwin = None
+CFLAGS = None
+HOST_CFLAGS = None
+CFLAGS_x86_64_apple_darwin = None
+CFLAGS_x86_64-apple-darwin = None
+running env -i APPLICATION_INSIGHTS_NO_STATSBEAT="true" CARGO="/Users/jeri/.rustup/toolchains/stable-x86_64-apple-darwin/bin/cargo" CARGO_CFG_DEBUG_ASSERTIONS="" CARGO_CFG_FEATURE="" CARGO_CFG_PANIC="unwind" CARGO_CFG_TARGET_ABI="" CARGO_CFG_TARGET_ARCH="x86_64" CARGO_CFG_TARGET_ENDIAN="little" CARGO_CFG_TARGET_ENV="" CARGO_CFG_TARGET_FAMILY="unix" CARGO_CFG_TARGET_FEATURE="cmpxchg16b,fxsr,sse,sse2,sse3,sse4.1,ssse3" CARGO_CFG_TARGET_HAS_ATOMIC="128,16,32,64,8,ptr" CARGO_CFG_TARGET_HAS_ATOMIC_PRIMITIVE_ALIGNMENT="128,16,32,64,8,ptr" CARGO_CFG_TARGET_OS="macos" CARGO_CFG_TARGET_POINTER_WIDTH="64" CARGO_CFG_TARGET_VENDOR="apple" CARGO_CFG_UNIX="" CARGO_ENCODED_RUSTFLAGS="" CARGO_HOME="/Users/jeri/.cargo" CARGO_MAKEFLAGS="-j --jobserver-fds=3,5 --jobserver-auth=3,5" CARGO_MANIFEST_DIR="/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libz-sys-1.1.30" CARGO_MANIFEST_LINKS="z" CARGO_MANIFEST_PATH="/Users/jeri/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libz-sys-1.1.30/Cargo.toml" CARGO_PKG_AUTHORS="Alex Crichton <alex@alexcrichton.com>:Josh Triplett <josh@joshtriplett.org>:Sebastian Thiel <sebastian.thiel@icloud.com>" CARGO_PKG_DESCRIPTION="Low-level bindings to the system libz library (also known as zlib)." CARGO_PKG_HOMEPAGE="" CARGO_PKG_LICENSE="MIT OR Apache-2.0" CARGO_PKG_LICENSE_FILE="" CARGO_PKG_NAME="libz-sys" CARGO_PKG_README="README.md" CARGO_PKG_REPOSITORY="https://github.com/rust-lang/libz-sys" CARGO_PKG_RUST_VERSION="" CARGO_PKG_VERSION="1.1.30" CARGO_PKG_VERSION_MAJOR="1" CARGO_PKG_VERSION_MINOR="1" CARGO_PKG_VERSION_PATCH="30" CARGO_PKG_VERSION_PRE="" CARGO_RESOLVER_LOCKFILE_PATH="/private/var/folders/g2/94y68l4n4kg5ngjqgx54cyfc0000gp/T/rust-analyzer339f-f/Cargo.lock" COMMAND_MODE="unix2003" DEBUG="true" DYLD_FALLBACK_LIBRARY_PATH="/Users/jeri/Documents/rust/Rust_final_project/rust_app/target/debug/deps:/Users/jeri/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/x86_64-apple-darwin/lib:/Users/jeri/.rustup/toolchains/stable-x86_64-apple-darwin/lib:/Users/jeri/lib:/usr/local/lib:/usr/lib" ELECTRON_RUN_AS_NODE="1" HOME="/Users/jeri" HOST="x86_64-apple-darwin" LC_ALL="C" LOGNAME="jeri" LaunchInstanceID="3D205E1D-2B2C-47B6-B56E-86AF339EB179" MACH_PORT_RENDEZVOUS_PEER_VALDATION="1" MallocNanoZone="0" NUM_JOBS="8" OLDPWD="/" OPT_LEVEL="0" OUT_DIR="/Users/jeri/Documents/rust/Rust_final_project/rust_app/target/debug/build/libz-sys-adc7b252b893171a/out" PATH="/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/jeri/.cargo/bin" PROFILE="debug" PWD="/" RUSTC="rustc" RUSTDOC="rustdoc" RUSTUP_AUTO_INSTALL="0" RUSTUP_HOME="/Users/jeri/.rustup" RUSTUP_TOOLCHAIN="/Users/jeri/.rustup/toolchains/stable-x86_64-apple-darwin" RUSTUP_TOOLCHAIN_SOURCE="env" RUST_BACKTRACE="short" RUST_RECURSION_COUNT="1" SECURITYSESSIONID="186a2" SHELL="/bin/zsh" SHLVL="0" SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.DtlWkH5glp/Listeners" TARGET="x86_64-apple-darwin" TMPDIR="/var/folders/g2/94y68l4n4kg5ngjqgx54cyfc0000gp/T/" USER="jeri" VSCODE_CODE_CACHE_PATH="/Users/jeri/Library/Application Support/Code/CachedData/fc3def6774c76082adf699d366f31a557ce5573f" VSCODE_CRASH_REPORTER_PROCESS_TYPE="extensionHost" VSCODE_CWD="/" VSCODE_ESM_ENTRYPOINT="vs/workbench/api/node/extensionHostProcess" VSCODE_HANDLES_UNCAUGHT_ERRORS="true" VSCODE_IPC_HOOK="/Users/jeri/Library/Application Support/Code/1.12-main.sock" VSCODE_NLS_CONFIG="{\"userLocale\":\"en-us\",\"osLocale\":\"en-th\",\"resolvedLanguage\":\"en\",\"defaultMessagesFile\":\"/Applications/Visual Studio Code.app/Contents/Resources/app/out/nls.messages.json\",\"locale\":\"en-us\",\"availableLanguages\":{}}" VSCODE_PID="427" XPC_FLAGS="0x0" XPC_SERVICE_NAME="application.com.microsoft.VSCode.63553449.63554077" _="/Applications/Visual Studio Code.app/Contents/MacOS/Code" __CARGO_TEST_CHANNEL_OVERRIDE_DO_NOT_USE_THIS="nightly" __CFBundleIdentifier="com.microsoft.VSCode" __CF_USER_TEXT_ENCODING="0x1F6:0x0:0x0" "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-gdwarf-2" "-fno-omit-frame-pointer" "-mno-omit-leaf-frame-pointer" "-m64" "--target=x86_64-apple-macosx" "-mmacosx-version-min=15.5" "-Wall" "-Wextra" "src/smoke.c" "-g0" "-o" "/dev/null" "-lz"
+cargo:rustc-link-lib=z
