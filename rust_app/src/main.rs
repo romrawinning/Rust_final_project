@@ -100,14 +100,3 @@ fn main() -> iced::Result {
 
     Gui_Viewer::run(Settings::default())
 }
-
-fn main() {
-    match system::test_database() {
-        Ok(()) => {
-            println!("Database connected successfully!");
-        }
-        Err(e) => {
-            eprintln!("Database connection failed: {}", e);
-        }
-    }
-}
