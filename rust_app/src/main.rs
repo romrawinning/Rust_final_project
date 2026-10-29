@@ -56,10 +56,49 @@ impl Sandbox for Gui_Viewer {
         }
     }
 
-fn read_lines(path: &str) -> Result<Vec<String>, String> {
-    fs::read_to_string(path)
-        .map(|s| s.lines().map(|line| line.to_string()).collect())
-        .map_err(|e| format!("Cannot open '{}': {}", path, e))
+ fn view(&self) -> Element<Message> {
+        let lines: Vec<Element<Message>> = self
+            .filtered
+            .iter()
+            .map(|line| text(line).into())
+            .collect();
+
+        let mut page = column![
+            text("Text / Log File Viewer").size(28),
+            row![
+                text_input("File path...", &self.file_name)
+                    .on_input(Message::File_name_change),
+                button("Open").on_press(Message::OpenFile),
+            ]
+            .spacing(10),
+            row![
+                text_input("Keyword...", &self.keyword).on_input(Message::Kw_change),
+                button("Search").on_press(Message::Search),
+            ]
+            .spacing(10),
+            text(format!(
+                "Matches: {}",
+                count_matches(&self.content, &self.keyword)
+            )),
+        ]
+        .spacing(10)
+        .padding(20);
+
+        if !self.error.is_empty() {
+            page = page.push(text(&self.error));
+        }
+
+        page.push(scrollable(column(lines).spacing(2))).into()
+    }
+}
+
+fn main() -> iced::Result {
+    match system::test_database() {
+        Ok(()) => println!("Database connected successfully!"),
+        Err(e) => eprintln!("Database connection failed: {}", e),
+    }
+
+    Gui_Viewer::run(Settings::default())
 }
 
 fn main() {
