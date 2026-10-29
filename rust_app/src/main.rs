@@ -1,7 +1,9 @@
 
 mod system;
-
+use system::{count_matches, filter_lines, read_lines};
 use std::fs;
+use iced::widget::{button, column, row, scrollable, text, text_input};
+use iced::{Element, Sandbox, Settings};
 
 #[derive(Debug, Clone)]
 pub enum Message {
@@ -15,6 +17,8 @@ pub struct Gui_Viewer {
     file_name: String,
     keyword: String,
     content: Vec<String>,
+    filtered: Vec<String>,
+    error: String,
 }
 
 fn read_lines(path: &str) -> Result<Vec<String>, String> {
