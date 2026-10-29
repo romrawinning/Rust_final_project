@@ -15,6 +15,14 @@ pub enum Message {
     OpenFile,
     Search,
 }
+
 fn main() {
-    
+    match system::test_database() {
+        Ok(()) => {
+            println!("Database connected successfully!");
+        }
+        Err(e) => {
+            eprintln!("Database connection failed: {}", e);
+        }
+    }
 }

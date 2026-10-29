@@ -1,5 +1,6 @@
 use std::fs;
 use std::io;
+use mysql::prelude::*;
 
 pub fn read_lines(path: &str) -> Result<Vec<String>, String> {
     fs::read_to_string(path)
@@ -18,3 +19,20 @@ pub fn filter_lines(lines: &[String], keyword: &str) -> Vec<String> {
 pub fn count_matches(lines: &[String], keyword: &str) -> usize {
     lines.iter().filter(|line| line.contains(keyword)).count()
 }
+
+
+pub fn test_database() -> Result<(), Box<dyn std::error::Error>> {
+    dotenvy::dotenv().ok();
+
+    let url = std::env::var("DATABASE_URL")?;
+    let pool = mysql::Pool::new(url.as_str())?;
+    let mut conn = pool.get_conn()?;
+
+    let version: Option<String> =
+        conn.query_first("SELECT VERSION()")?;
+
+    println!("Connected to MySQL: {:?}", version);
+
+    Ok(())
+}
+

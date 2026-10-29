@@ -1,0 +1,12 @@
+
+CREATE DATABASE IF NOT EXISTS log_viewer;
+
+USE log_viewer;
+
+CREATE TABLE IF NOT EXISTS search_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    file_path VARCHAR(1000) NOT NULL,
+    keyword VARCHAR(255) NOT NULL,
+    match_count INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
