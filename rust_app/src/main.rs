@@ -1,7 +1,15 @@
+
 mod system;
 
-use iced::widget::{button, column, row, scrollable, text, text_input};
-use iced::{Alignment, Length, Element, Sandbox, Settings, Theme, Command};
+use std::fs;
+
+#[derive(Debug, Clone)]
+pub enum Message {
+    File_name_change(String),
+    Kw_change(String),
+    OpenFile,
+    Search,
+}
 
 pub struct Gui_Viewer {
     file_name: String,
@@ -9,11 +17,10 @@ pub struct Gui_Viewer {
     content: Vec<String>,
 }
 
-pub enum Message {
-    File_name_change(String),
-    Kw_change(String),
-    OpenFile,
-    Search,
+fn read_lines(path: &str) -> Result<Vec<String>, String> {
+    fs::read_to_string(path)
+        .map(|s| s.lines().map(|line| line.to_string()).collect())
+        .map_err(|e| format!("Cannot open '{}': {}", path, e))
 }
 
 fn main() {
