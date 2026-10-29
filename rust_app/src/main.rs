@@ -1,6 +1,6 @@
 
 mod system;
-
+use system::{count_matches, filter_lines, read_lines};
 use std::fs;
 
 #[derive(Debug, Clone)]
