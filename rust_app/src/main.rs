@@ -21,6 +21,41 @@ pub struct Gui_Viewer {
     error: String,
 }
 
+impl Sandbox for Gui_Viewer {
+    type Message = Message;
+
+    fn new() -> Self {
+        Gui_Viewer {
+            file_name: String::new(),
+            keyword: String::new(),
+            content: Vec::new(),
+            filtered: Vec::new(),
+            error: String::new(),
+        }
+    }
+
+    fn title(&self) -> String {
+        String::from("Text / Log File Viewer")
+    }
+
+    fn update(&mut self, message: Message) {
+        match message {
+            Message::File_name_change(s) => self.file_name = s,
+            Message::Kw_change(s) => self.keyword = s,
+            Message::OpenFile => match read_lines(&self.file_name) {
+                Ok(lines) => {
+                    self.content = lines;
+                    self.filtered = self.content.clone();
+                    self.error.clear();
+                }
+                Err(e) => self.error = e,
+            },
+            Message::Search => {
+                self.filtered = filter_lines(&self.content, &self.keyword);
+            }
+        }
+    }
+
 fn read_lines(path: &str) -> Result<Vec<String>, String> {
     fs::read_to_string(path)
         .map(|s| s.lines().map(|line| line.to_string()).collect())
