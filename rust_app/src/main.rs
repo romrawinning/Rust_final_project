@@ -112,7 +112,10 @@ impl Sandbox for Gui_Viewer {
 
             Message::ConfirmExport => match system::export_lines("result.txt", &self.filtered) {
                 Ok(()) => {
-                    self.error.clear();
+                    let path = std::env::current_dir().unwrap_or_default();
+
+                    self.error = format!("Export saved to: {}", path.join("result.txt").display());
+
                     self.confirm_export = false;
                 }
                 Err(e) => {
@@ -129,7 +132,7 @@ impl Sandbox for Gui_Viewer {
                 let lines: Vec<Element<Message>> =
                     self.filtered.iter().map(|line| text(line).into()).collect();
 
-                column![
+                let mut page = column![
                     text("Text / Log File Viewer").size(28),
                     row![
                         text_input("File path...", &self.file_name)
@@ -154,8 +157,22 @@ impl Sandbox for Gui_Viewer {
                     scrollable(column(lines).spacing(2)),
                 ]
                 .spacing(10)
-                .padding(20)
-                .into()
+                .padding(20);
+                if self.confirm_export {
+                    page = page.push(
+                        column![
+                            text("Do you want to export the results?"),
+                            row![
+                                button("Yes").on_press(Message::ConfirmExport),
+                                button("Cancel").on_press(Message::CancelExport),
+                            ]
+                            .spacing(10)
+                        ]
+                        .spacing(10),
+                    );
+                }
+
+                page.into()
             }
 
             Page::History => {
@@ -167,19 +184,6 @@ impl Sandbox for Gui_Viewer {
                 .padding(20);
 
                 for item in &self.history {
-                    if self.confirm_export {
-                        page = page.push(
-                            column![
-                                text("Do you want to export the results?"),
-                                row![
-                                    button("Yes").on_press(Message::ConfirmExport),
-                                    button("Cancel").on_press(Message::CancelExport),
-                                ]
-                                .spacing(10)
-                            ]
-                            .spacing(10),
-                        );
-                    }
                     page = page.push(text(format!(
                         "{} | {} | {} | {} | {}",
                         item.id, item.file_path, item.keyword, item.match_count, item.created_at
