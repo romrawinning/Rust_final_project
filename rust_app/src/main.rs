@@ -11,6 +11,15 @@ pub enum Message {
     Search,
     LoadHistory,
     ToggleTheme,
+    GoTutorial,
+    GoSearch,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum Page {
+    Search,
+    History,
+    Tutorial,
 }
 
 pub struct Gui_Viewer {
@@ -21,6 +30,7 @@ pub struct Gui_Viewer {
     error: String,
     history: Vec<system::SearchHistory>,
     theme: Theme,
+    page: Page,
 }
 
 impl Sandbox for Gui_Viewer {
@@ -35,6 +45,7 @@ impl Sandbox for Gui_Viewer {
             error: String::new(),
             history: Vec::new(),
             theme: Theme::Light,
+            page: Page::Search,
         }
     }
 
@@ -69,6 +80,7 @@ impl Sandbox for Gui_Viewer {
                     Ok(history) => {
                         self.history = history;
                         self.error.clear();
+                        self.page = Page::History; // Switch to the history page after loading
                     }
                     Err(e) => self.error = format!("Failed to load search history: {}", e),
                 }
@@ -79,53 +91,87 @@ impl Sandbox for Gui_Viewer {
                     _ => Theme::Light,
                 };
             }
+            Message::GoTutorial => {
+                self.page = Page::Tutorial;
+            }
+            Message::GoSearch => {
+                self.page = Page::Search;
+            }
         }
     }
 
     fn view(&self) -> Element<Message> {
-        let lines: Vec<Element<Message>> =
-            self.filtered.iter().map(|line| text(line).into()).collect();
+        match self.page {
+            Page::Search => {
+                let lines: Vec<Element<Message>> =
+                    self.filtered.iter().map(|line| text(line).into()).collect();
 
-        let mut page = column![
-            text("Text / Log File Viewer").size(28),
-            row![
-                text_input("File path...", &self.file_name).on_input(Message::File_name_change),
-                button("Open").on_press(Message::OpenFile),
+                column![
+                    text("Text / Log File Viewer").size(28),
+                    row![
+                        text_input("File path...", &self.file_name)
+                            .on_input(Message::File_name_change),
+                        button("Open").on_press(Message::OpenFile),
+                    ]
+                    .spacing(10),
+                    row![
+                        text_input("Keyword...", &self.keyword).on_input(Message::Kw_change),
+                        button("Search").on_press(Message::Search),
+                    ]
+                    .spacing(10),
+                    text(format!(
+                        "Matches: {}",
+                        count_matches(&self.content, &self.keyword)
+                    )),
+                    button("Search History").on_press(Message::LoadHistory),
+                    button("Toggle Theme").on_press(Message::ToggleTheme),
+                    button("?").on_press(Message::GoTutorial),
+                    text(&self.error),
+                    scrollable(column(lines).spacing(2)),
+                ]
+                .spacing(10)
+                .padding(20)
+                .into()
+            }
+
+            Page::History => {
+                let mut page = column![
+                    text("Search History").size(28),
+                    button("Back").on_press(Message::GoSearch),
+                ]
+                .spacing(10)
+                .padding(20);
+
+                for item in &self.history {
+                    page = page.push(text(format!(
+                        "{} | {} | {} | {} | {}",
+                        item.id, item.file_path, item.keyword, item.match_count, item.created_at
+                    )));
+                }
+
+                scrollable(page).into()
+            }
+
+            Page::Tutorial => column![
+                text("Tutorial").size(28),
+                text("1. Enter your file path."),
+                text("2. Click Open to load your file."),
+                text("3. Enter a keyword."),
+                text("4. Click Search to find matching lines."),
+                text("5. Click Load Search History to see your history."),
+                text("6. Click Toggle Theme to switch between light and dark mode."),
+                button("Back").on_press(Message::GoSearch),
             ]
-            .spacing(10),
-            row![
-                text_input("Keyword...", &self.keyword).on_input(Message::Kw_change),
-                button("Search").on_press(Message::Search),
-            ]
-            .spacing(10),
-            text(format!(
-                "Matches: {}",
-                count_matches(&self.content, &self.keyword)
-            )),
-            button("Load Search History").on_press(Message::LoadHistory),
-            button("Toggle Theme").on_press(Message::ToggleTheme),
-        ]
-        .spacing(10)
-        .padding(20);
-
-        if !self.error.is_empty() {
-            page = page.push(text(&self.error));
+            .spacing(10)
+            .padding(20)
+            .into(),
         }
-        page = page.push(text("Search History").size(20));
-
-        for item in &self.history {
-            page = page.push(text(format!(
-                "{} | {} | {} | {} | {}",
-                item.id, item.file_path, item.keyword, item.match_count, item.created_at
-            )));
-        }
-
-        page.push(scrollable(column(lines).spacing(2))).into()
     }
 
     fn theme(&self) -> Theme {
         self.theme.clone()
     }
+    
 }
 
 fn main() -> iced::Result {
