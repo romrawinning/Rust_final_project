@@ -98,3 +98,18 @@ pub fn export_lines(path: &str, lines: &[String],) -> Result<(), String> {
     std::fs::write(path, content)
         .map_err(|e| e.to_string())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_filter_lines() {
+        let lines = vec![
+            "ERROR: File not found".to_string(),
+            "INFO: Started".to_string(),
+        ];
+        let result = filter_lines(&lines, "ERROR");
+        assert_eq!(result.len(), 1);
+    }
+}
