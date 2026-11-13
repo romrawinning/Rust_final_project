@@ -145,7 +145,7 @@ mod tests {
     fn test_case_sensitive() {
         let lines = vec![
             String::from("ERROR"),
-            String::from(""error)
+            String::from("error"),
         ];
         let result = filter_lines(&lines, "ERROR");
         assert_eq!(result.len(), 1);
