@@ -1,6 +1,7 @@
 mod system;
+
 use iced::widget::{button, column, row, scrollable, text, text_input};
-use iced::{Element, Sandbox, Settings, Theme};
+use iced::{Application, Command, Element, Settings, Theme, executor};
 use system::{count_matches, filter_lines, read_lines};
 
 #[derive(Debug, Clone)]
@@ -16,6 +17,7 @@ pub enum Message {
     Export,
     ConfirmExport,
     CancelExport,
+    FileLoaded(Result<Vec<String>, String>),
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -35,73 +37,112 @@ pub struct Gui_Viewer {
     theme: Theme,
     page: Page,
     confirm_export: bool,
+    is_loading: bool,
 }
 
-impl Sandbox for Gui_Viewer {
+impl Application for Gui_Viewer {
     type Message = Message;
+    type Executor = executor::Default;
+    type Theme = Theme;
+    type Flags = ();
 
-    fn new() -> Self {
-        Gui_Viewer {
-            file_name: String::new(),
-            keyword: String::new(),
-            content: Vec::new(),
-            filtered: Vec::new(),
-            error: String::new(),
-            history: Vec::new(),
-            theme: Theme::Light,
-            page: Page::Search,
-            confirm_export: false,
-        }
+    fn new(_flags: ()) -> (Self, Command<Message>) {
+        (
+            Gui_Viewer {
+                file_name: String::new(),
+                keyword: String::new(),
+                content: Vec::new(),
+                filtered: Vec::new(),
+                error: String::new(),
+                history: Vec::new(),
+                theme: Theme::Light,
+                page: Page::Search,
+                confirm_export: false,
+                is_loading: false,
+            },
+            Command::none(),
+        )
     }
 
     fn title(&self) -> String {
         String::from("Text / Log File Viewer")
     }
 
-    fn update(&mut self, message: Message) {
+    fn update(&mut self, message: Message) -> Command<Message> {
         match message {
-            Message::File_name_change(s) => self.file_name = s,
-            Message::Kw_change(s) => self.keyword = s,
-            Message::OpenFile => match read_lines(&self.file_name) {
-                Ok(lines) => {
-                    self.content = lines;
-                    self.filtered = self.content.clone();
-                    self.error.clear();
+            Message::File_name_change(s) => {
+                self.file_name = s;
+            }
+
+            Message::Kw_change(s) => {
+                self.keyword = s;
+            }
+
+            Message::OpenFile => {
+                self.is_loading = true;
+
+                let file_name = self.file_name.clone();
+
+                return Command::perform(
+                    async move { read_lines(&file_name) },
+                    Message::FileLoaded,
+                );
+            }
+
+            Message::FileLoaded(result) => {
+                self.is_loading = false;
+
+                match result {
+                    Ok(lines) => {
+                        self.content = lines;
+                        self.filtered = self.content.clone();
+                        self.error.clear();
+                    }
+                    Err(e) => {
+                        self.error = e;
+                    }
                 }
-                Err(e) => self.error = e,
-            },
+            }
+
             Message::Search => {
                 self.filtered = filter_lines(&self.content, &self.keyword);
+
                 let matches = self.filtered.len();
 
                 match system::save_search_history(&self.file_name, &self.keyword, matches) {
                     Ok(()) => self.error.clear(),
-                    Err(e) => self.error = format!("Failed to save search history: {}", e),
-                }
-            }
-            Message::LoadHistory => {
-                // Load search history from the database
-                match system::get_search_history() {
-                    Ok(history) => {
-                        self.history = history;
-                        self.error.clear();
-                        self.page = Page::History; // Switch to the history page after loading
+                    Err(e) => {
+                        self.error = format!("Failed to save search history: {}", e);
                     }
-                    Err(e) => self.error = format!("Failed to load search history: {}", e),
                 }
             }
+
+            Message::LoadHistory => match system::get_search_history() {
+                Ok(history) => {
+                    self.history = history;
+                    self.error.clear();
+                    self.page = Page::History;
+                }
+                Err(e) => {
+                    self.error = format!("Failed to load search history: {}", e);
+                }
+            },
+
             Message::ToggleTheme => {
                 self.theme = match self.theme.clone() {
                     Theme::Light => Theme::Dark,
                     _ => Theme::Light,
                 };
             }
+
             Message::GoTutorial => {
                 self.page = Page::Tutorial;
             }
+
             Message::GoSearch => {
                 self.page = Page::Search;
             }
+
             Message::Export => {
                 self.confirm_export = true;
             }
@@ -124,10 +165,12 @@ impl Sandbox for Gui_Viewer {
                 }
             },
         }
+
+        Command::none()
     }
 
     fn view(&self) -> Element<Message> {
-        match self.page {
+        match &self.page {
             Page::Search => {
                 let lines: Vec<Element<Message>> =
                     self.filtered.iter().map(|line| text(line).into()).collect();
@@ -137,7 +180,12 @@ impl Sandbox for Gui_Viewer {
                     row![
                         text_input("File path...", &self.file_name)
                             .on_input(Message::File_name_change),
-                        button("Open").on_press(Message::OpenFile),
+                        button(if self.is_loading {
+                            "Loading..."
+                        } else {
+                            "Open"
+                        })
+                        .on_press(Message::OpenFile),
                     ]
                     .spacing(10),
                     row![
@@ -201,6 +249,7 @@ impl Sandbox for Gui_Viewer {
                 text("4. Click Search to find matching lines."),
                 text("5. Click Load Search History to see your history."),
                 text("6. Click Toggle Theme to switch between light and dark mode."),
+                text("7. Click Export TXT to save the results to a text file."),
                 button("Back").on_press(Message::GoSearch),
             ]
             .spacing(10)
