@@ -50,6 +50,12 @@ impl Sandbox for Gui_Viewer {
             },
             Message::Search => {
                 self.filtered = filter_lines(&self.content, &self.keyword);
+                let matches = self.filtered.len();
+
+                match system::save_search_history(&self.file_name, &self.keyword, matches) {
+                    Ok(()) => self.error.clear(),
+                    Err(e) => self.error = format!("Failed to save search history: {}", e),
+                }
             }
         }
     }
