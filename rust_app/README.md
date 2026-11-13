@@ -33,6 +33,10 @@ Features:
 -Required dependencies listed in Cargo.toml
 
 5. Screenshots
+![Main GUI](screenshots/main.png)
+![Export Confirm GUI](screenshots/export.png)
+![Tutorial GUI](screenshots/tut.png)
+![History GUI](screenshots/history.png)
 
 6. What We Learned
 
