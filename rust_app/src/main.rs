@@ -1,7 +1,7 @@
 mod system;
-use system::{count_matches, filter_lines, read_lines};
 use iced::widget::{button, column, row, scrollable, text, text_input};
 use iced::{Element, Sandbox, Settings};
+use system::{count_matches, filter_lines, read_lines};
 
 #[derive(Debug, Clone)]
 pub enum Message {
@@ -9,6 +9,7 @@ pub enum Message {
     Kw_change(String),
     OpenFile,
     Search,
+    LoadHistory,
 }
 
 pub struct Gui_Viewer {
@@ -17,6 +18,7 @@ pub struct Gui_Viewer {
     content: Vec<String>,
     filtered: Vec<String>,
     error: String,
+    history: Vec<system::SearchHistory>,
 }
 
 impl Sandbox for Gui_Viewer {
@@ -29,6 +31,7 @@ impl Sandbox for Gui_Viewer {
             content: Vec::new(),
             filtered: Vec::new(),
             error: String::new(),
+            history: Vec::new(),
         }
     }
 
@@ -57,21 +60,27 @@ impl Sandbox for Gui_Viewer {
                     Err(e) => self.error = format!("Failed to save search history: {}", e),
                 }
             }
+            Message::LoadHistory => {
+                // Load search history from the database
+                match system::get_search_history() {
+                    Ok(history) => {
+                        self.history = history;
+                        self.error.clear();
+                    }
+                    Err(e) => self.error = format!("Failed to load search history: {}", e),
+                }
+            }
         }
     }
 
- fn view(&self) -> Element<Message> {
-        let lines: Vec<Element<Message>> = self
-            .filtered
-            .iter()
-            .map(|line| text(line).into())
-            .collect();
+    fn view(&self) -> Element<Message> {
+        let lines: Vec<Element<Message>> =
+            self.filtered.iter().map(|line| text(line).into()).collect();
 
         let mut page = column![
             text("Text / Log File Viewer").size(28),
             row![
-                text_input("File path...", &self.file_name)
-                    .on_input(Message::File_name_change),
+                text_input("File path...", &self.file_name).on_input(Message::File_name_change),
                 button("Open").on_press(Message::OpenFile),
             ]
             .spacing(10),
@@ -84,12 +93,21 @@ impl Sandbox for Gui_Viewer {
                 "Matches: {}",
                 count_matches(&self.content, &self.keyword)
             )),
+            button("Load Search History").on_press(Message::LoadHistory),
         ]
         .spacing(10)
         .padding(20);
 
         if !self.error.is_empty() {
             page = page.push(text(&self.error));
+        }
+        page = page.push(text("Search History").size(20));
+
+        for item in &self.history {
+            page = page.push(text(format!(
+                "{} | {} | {} | {} | {}",
+                item.id, item.file_path, item.keyword, item.match_count, item.created_at
+            )));
         }
 
         page.push(scrollable(column(lines).spacing(2))).into()
