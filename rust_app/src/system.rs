@@ -64,8 +64,7 @@ pub fn save_search_history(
     Ok(())
 }
 
-pub fn get_search_history(
-) -> Result<Vec<SearchHistory>, Box<dyn std::error::Error>> {
+pub fn get_search_history() -> Result<Vec<SearchHistory>, Box<dyn std::error::Error>> {
     dotenvy::dotenv().ok();
 
     let url = std::env::var("DATABASE_URL")?;
@@ -77,9 +76,7 @@ pub fn get_search_history(
                 DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s')
          FROM search_history
          ORDER BY created_at DESC",
-        |(id, file_path, keyword, match_count, created_at): (
-            i32, String, String, i32, String
-        )| {
+        |(id, file_path, keyword, match_count, created_at): (i32, String, String, i32, String)| {
             SearchHistory {
                 id,
                 file_path,
@@ -92,7 +89,6 @@ pub fn get_search_history(
 
     Ok(history)
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -121,10 +117,7 @@ mod tests {
 
     #[test]
     fn test_no_matches() {
-        let lines = vec![
-            String::from("INFO"),
-            String::from("WARNING"),
-        ];
+        let lines = vec![String::from("INFO"), String::from("WARNING")];
 
         let result = filter_lines(&lines, "ERROR");
         assert!(result.is_empty());
@@ -138,21 +131,14 @@ mod tests {
 
     #[test]
     fn test_case_sensitive() {
-        let lines = vec![
-            String::from("ERROR"),
-            String::from("error"),
-        ];
+        let lines = vec![String::from("ERROR"), String::from("error")];
         let result = filter_lines(&lines, "ERROR");
         assert_eq!(result.len(), 1);
     }
 }
 
-pub fn export_lines(
-    path: &str,
-    lines: &[String],
-) -> Result<(), String> {
+pub fn export_lines(path: &str, lines: &[String]) -> Result<(), String> {
     let content = lines.join("\n");
 
-    std::fs::write(path, content)
-        .map_err(|e| e.to_string())
+    std::fs::write(path, content).map_err(|e| e.to_string())
 }
