@@ -112,4 +112,42 @@ mod tests {
         let result = filter_lines(&lines, "ERROR");
         assert_eq!(result.len(), 1);
     }
+
+    #[test]
+    fn test_count_matches() {
+        let lines = vec![
+            String::from("ERROR"),
+            String::from("INFO"),
+            String::from("ERROR"),
+        ];
+
+        assert_eq!(count_matches(&lines, "ERROR"), 2);
+    }
+
+    #[test]
+    fn test_no_matches() {
+        let lines = vec![
+            String::from("INFO"),
+            String::from("WARNING"),
+        ];
+
+        let result = filter_lines(&lines, "ERROR");
+        assert!(result.is_empty());
+    }
+
+    #[test]
+    fn test_empty_lines() {
+        let lines: Vec<String> = vec![];
+        assert_eq!(count_matches(&lines, "ERROR"), 0);
+    }
+
+    #[test]
+    fn test_case_sensitive() {
+        let lines = vec![
+            String::from("ERROR"),
+            String::from(""error)
+        ];
+        let result = filter_lines(&lines, "ERROR");
+        assert_eq!(result.len(), 1);
+    }
 }
