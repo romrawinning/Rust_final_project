@@ -1,6 +1,6 @@
 mod system;
 use iced::widget::{button, column, row, scrollable, text, text_input};
-use iced::{Element, Sandbox, Settings};
+use iced::{Element, Sandbox, Settings, Theme};
 use system::{count_matches, filter_lines, read_lines};
 
 #[derive(Debug, Clone)]
@@ -10,6 +10,7 @@ pub enum Message {
     OpenFile,
     Search,
     LoadHistory,
+    ToggleTheme,
 }
 
 pub struct Gui_Viewer {
@@ -19,6 +20,7 @@ pub struct Gui_Viewer {
     filtered: Vec<String>,
     error: String,
     history: Vec<system::SearchHistory>,
+    theme: Theme,
 }
 
 impl Sandbox for Gui_Viewer {
@@ -32,6 +34,7 @@ impl Sandbox for Gui_Viewer {
             filtered: Vec::new(),
             error: String::new(),
             history: Vec::new(),
+            theme: Theme::Light,
         }
     }
 
@@ -70,6 +73,12 @@ impl Sandbox for Gui_Viewer {
                     Err(e) => self.error = format!("Failed to load search history: {}", e),
                 }
             }
+            Message::ToggleTheme => {
+                self.theme = match self.theme.clone() {
+                    Theme::Light => Theme::Dark,
+                    _ => Theme::Light,
+                };
+            }
         }
     }
 
@@ -94,6 +103,7 @@ impl Sandbox for Gui_Viewer {
                 count_matches(&self.content, &self.keyword)
             )),
             button("Load Search History").on_press(Message::LoadHistory),
+            button("Toggle Theme").on_press(Message::ToggleTheme),
         ]
         .spacing(10)
         .padding(20);
@@ -111,6 +121,10 @@ impl Sandbox for Gui_Viewer {
         }
 
         page.push(scrollable(column(lines).spacing(2))).into()
+    }
+
+    fn theme(&self) -> Theme {
+        self.theme.clone()
     }
 }
 
