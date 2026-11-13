@@ -13,6 +13,9 @@ pub enum Message {
     ToggleTheme,
     GoTutorial,
     GoSearch,
+    Export,
+    ConfirmExport,
+    CancelExport,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -31,6 +34,7 @@ pub struct Gui_Viewer {
     history: Vec<system::SearchHistory>,
     theme: Theme,
     page: Page,
+    confirm_export: bool,
 }
 
 impl Sandbox for Gui_Viewer {
@@ -46,6 +50,7 @@ impl Sandbox for Gui_Viewer {
             history: Vec::new(),
             theme: Theme::Light,
             page: Page::Search,
+            confirm_export: false,
         }
     }
 
@@ -97,6 +102,24 @@ impl Sandbox for Gui_Viewer {
             Message::GoSearch => {
                 self.page = Page::Search;
             }
+            Message::Export => {
+                self.confirm_export = true;
+            }
+
+            Message::CancelExport => {
+                self.confirm_export = false;
+            }
+
+            Message::ConfirmExport => match system::export_lines("result.txt", &self.filtered) {
+                Ok(()) => {
+                    self.error.clear();
+                    self.confirm_export = false;
+                }
+                Err(e) => {
+                    self.error = format!("Export failed: {}", e);
+                    self.confirm_export = false;
+                }
+            },
         }
     }
 
@@ -126,6 +149,7 @@ impl Sandbox for Gui_Viewer {
                     button("Search History").on_press(Message::LoadHistory),
                     button("Toggle Theme").on_press(Message::ToggleTheme),
                     button("?").on_press(Message::GoTutorial),
+                    button("Export TXT").on_press(Message::Export),
                     text(&self.error),
                     scrollable(column(lines).spacing(2)),
                 ]
@@ -143,6 +167,19 @@ impl Sandbox for Gui_Viewer {
                 .padding(20);
 
                 for item in &self.history {
+                    if self.confirm_export {
+                        page = page.push(
+                            column![
+                                text("Do you want to export the results?"),
+                                row![
+                                    button("Yes").on_press(Message::ConfirmExport),
+                                    button("Cancel").on_press(Message::CancelExport),
+                                ]
+                                .spacing(10)
+                            ]
+                            .spacing(10),
+                        );
+                    }
                     page = page.push(text(format!(
                         "{} | {} | {} | {} | {}",
                         item.id, item.file_path, item.keyword, item.match_count, item.created_at
@@ -171,7 +208,6 @@ impl Sandbox for Gui_Viewer {
     fn theme(&self) -> Theme {
         self.theme.clone()
     }
-    
 }
 
 fn main() -> iced::Result {
