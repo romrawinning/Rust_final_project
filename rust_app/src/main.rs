@@ -1,7 +1,7 @@
 mod system;
 
-use iced::widget::{button, column, row, scrollable, text, text_input};
-use iced::{Application, Command, Element, Settings, Theme, executor};
+use iced::widget::{Space, button, column, container, row, scrollable, text, text_input};
+use iced::{Alignment, Application, Command, Element, Length, Settings, Theme, executor};
 use system::{count_matches, filter_lines, read_lines};
 
 #[derive(Debug, Clone)]
@@ -172,11 +172,41 @@ impl Application for Gui_Viewer {
     fn view(&self) -> Element<Message> {
         match &self.page {
             Page::Search => {
+                if self.confirm_export {
+                    return container(
+                        column![
+                            text("Do you want to export the results?").size(24),
+                            row![
+                                button("Yes").on_press(Message::ConfirmExport),
+                                button("Cancel").on_press(Message::CancelExport),
+                            ]
+                            .spacing(15),
+                        ]
+                        .spacing(20)
+                        .align_items(Alignment::Center),
+                    )
+                    .width(Length::Fill)
+                    .height(Length::Fill)
+                    .center_x()
+                    .center_y()
+                    .into();
+                }
+
                 let lines: Vec<Element<Message>> =
                     self.filtered.iter().map(|line| text(line).into()).collect();
 
                 let mut page = column![
-                    text("Text / Log File Viewer").size(28),
+                    // Header
+                    row![
+                        text("Text / Log File Viewer").size(28),
+                        Space::with_width(Length::Fill),
+                        button("Toggle Theme").on_press(Message::ToggleTheme),
+                        button("Search History").on_press(Message::LoadHistory),
+                        button("Export TXT").on_press(Message::Export),
+                    ]
+                    .spacing(10)
+                    .align_items(Alignment::Center),
+                    // File path
                     row![
                         text_input("File path...", &self.file_name)
                             .on_input(Message::File_name_change),
@@ -185,9 +215,14 @@ impl Application for Gui_Viewer {
                         } else {
                             "Open"
                         })
-                        .on_press(Message::OpenFile),
+                        .on_press_maybe(if self.is_loading {
+                            None
+                        } else {
+                            Some(Message::OpenFile)
+                        }),
                     ]
                     .spacing(10),
+                    // Keyword
                     row![
                         text_input("Keyword...", &self.keyword).on_input(Message::Kw_change),
                         button("Search").on_press(Message::Search),
@@ -197,15 +232,17 @@ impl Application for Gui_Viewer {
                         "Matches: {}",
                         count_matches(&self.content, &self.keyword)
                     )),
-                    button("Search History").on_press(Message::LoadHistory),
-                    button("Toggle Theme").on_press(Message::ToggleTheme),
-                    button("?").on_press(Message::GoTutorial),
-                    button("Export TXT").on_press(Message::Export),
                     text(&self.error),
-                    scrollable(column(lines).spacing(2)),
+                    scrollable(column(lines).spacing(2)).height(Length::Fill),
+                    row![
+                        Space::with_width(Length::Fill),
+                        button("?").on_press(Message::GoTutorial),
+                    ],
                 ]
                 .spacing(10)
-                .padding(20);
+                .padding(20)
+                .height(Length::Fill);
+
                 if self.confirm_export {
                     page = page.push(
                         column![
@@ -225,8 +262,12 @@ impl Application for Gui_Viewer {
 
             Page::History => {
                 let mut page = column![
-                    text("Search History").size(28),
-                    button("Back").on_press(Message::GoSearch),
+                    row![
+                        text("Search History").size(28),
+                        Space::with_width(Length::Fill),
+                        button("Back").on_press(Message::GoSearch),
+                    ]
+                    .align_items(Alignment::Center),
                 ]
                 .spacing(10)
                 .padding(20);
@@ -242,7 +283,12 @@ impl Application for Gui_Viewer {
             }
 
             Page::Tutorial => column![
-                text("Tutorial").size(28),
+                row![
+                    text("Tutorial").size(28),
+                    Space::with_width(Length::Fill),
+                    button("Back").on_press(Message::GoSearch),
+                ]
+                .align_items(Alignment::Center),
                 text("1. Enter your file path."),
                 text("2. Click Open to load your file."),
                 text("3. Enter a keyword."),
@@ -250,7 +296,6 @@ impl Application for Gui_Viewer {
                 text("5. Click Load Search History to see your history."),
                 text("6. Click Toggle Theme to switch between light and dark mode."),
                 text("7. Click Export TXT to save the results to a text file."),
-                button("Back").on_press(Message::GoSearch),
             ]
             .spacing(10)
             .padding(20)

@@ -1,1 +1,1 @@
-INFO: User logged in
+ERROR: Connection failed
