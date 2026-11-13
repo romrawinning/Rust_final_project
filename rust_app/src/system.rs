@@ -92,3 +92,9 @@ pub fn get_search_history(
 
     Ok(history)
 }
+
+pub fn export_lines(path: &str, lines: &[String],) -> Result<(), String> {
+    let content = lines.join("\n");
+    std::fs::write(path, content)
+        .map_err(|e| e.to_string())
+}
